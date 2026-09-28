@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" font-family="Inter, Helvetica, Arial, sans-serif">
+  <rect width="960" height="420" rx="16" fill="#0f1218"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a91a3"/></marker>
+    <marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#a58bff"/></marker>
+  </defs>
+  <text x="32" y="44" fill="#e6e8ee" font-size="20" font-weight="700">Deja architecture</text>
+  <text x="32" y="66" fill="#8a91a3" font-size="13">Alerts in, grounded triage out. Every resolution goes back into memory.</text>
+
+  <!-- alert -->
+  <rect x="32" y="110" width="170" height="72" rx="10" fill="#171b24" stroke="#ff5d6c"/>
+  <text x="117" y="140" fill="#e6e8ee" font-size="14" font-weight="600" text-anchor="middle">Alert + logs</text>
+  <text x="117" y="160" fill="#8a91a3" font-size="11" text-anchor="middle">PagerDuty · Datadog · k8s</text>
+
+  <!-- api -->
+  <rect x="262" y="96" width="220" height="100" rx="10" fill="#171b24" stroke="#2e3445"/>
+  <text x="372" y="124" fill="#e6e8ee" font-size="14" font-weight="600" text-anchor="middle">Deja agent (FastAPI)</text>
+  <text x="372" y="146" fill="#8a91a3" font-size="11" text-anchor="middle">triage · resolve · runbook</text>
+  <text x="372" y="162" fill="#8a91a3" font-size="11" text-anchor="middle">ask · teach rule</text>
+  <text x="372" y="180" fill="#8a91a3" font-size="11" text-anchor="middle">JSON repair + fallbacks</text>
+
+  <!-- llm -->
+  <rect x="262" y="262" width="220" height="80" rx="10" fill="#171b24" stroke="#2e3445"/>
+  <text x="372" y="292" fill="#e6e8ee" font-size="14" font-weight="600" text-anchor="middle">Groq LLM</text>
+  <text x="372" y="312" fill="#8a91a3" font-size="11" text-anchor="middle">gpt-oss-120b → qwen3-32b</text>
+  <text x="372" y="328" fill="#8a91a3" font-size="11" text-anchor="middle">with memory  vs  stateless baseline</text>
+
+  <!-- hindsight -->
+  <rect x="560" y="86" width="368" height="276" rx="12" fill="#1a1530" stroke="#7c5cff" stroke-width="1.5"/>
+  <text x="744" y="116" fill="#a58bff" font-size="15" font-weight="700" text-anchor="middle">Hindsight memory bank · deja-oncall</text>
+  <g font-size="12">
+    <rect x="580" y="134" width="160" height="48" rx="8" fill="#12151c" stroke="#2e3445"/>
+    <text x="660" y="155" fill="#e6e8ee" text-anchor="middle" font-weight="600">retain</text>
+    <text x="660" y="172" fill="#8a91a3" text-anchor="middle" font-size="10.5">postmortems · feedback</text>
+    <rect x="752" y="134" width="160" height="48" rx="8" fill="#12151c" stroke="#2e3445"/>
+    <text x="832" y="155" fill="#e6e8ee" text-anchor="middle" font-weight="600">recall</text>
+    <text x="832" y="172" fill="#8a91a3" text-anchor="middle" font-size="10.5">semantic·BM25·graph·time</text>
+    <rect x="580" y="194" width="160" height="48" rx="8" fill="#12151c" stroke="#2e3445"/>
+    <text x="660" y="215" fill="#e6e8ee" text-anchor="middle" font-weight="600">reflect</text>
+    <text x="660" y="232" fill="#8a91a3" text-anchor="middle" font-size="10.5">Ask Deja · structured triage</text>
+    <rect x="752" y="194" width="160" height="48" rx="8" fill="#12151c" stroke="#2e3445"/>
+    <text x="832" y="215" fill="#e6e8ee" text-anchor="middle" font-weight="600">mental models</text>
+    <text x="832" y="232" fill="#8a91a3" text-anchor="middle" font-size="10.5">living runbook per service</text>
+    <rect x="580" y="254" width="160" height="48" rx="8" fill="#12151c" stroke="#2e3445"/>
+    <text x="660" y="275" fill="#e6e8ee" text-anchor="middle" font-weight="600">directives</text>
+    <text x="660" y="292" fill="#8a91a3" text-anchor="middle" font-size="10.5">hard team rules</text>
+    <rect x="752" y="254" width="160" height="48" rx="8" fill="#12151c" stroke="#2e3445"/>
+    <text x="832" y="275" fill="#e6e8ee" text-anchor="middle" font-weight="600">observations</text>
+    <text x="832" y="292" fill="#8a91a3" text-anchor="middle" font-size="10.5">auto-consolidated patterns</text>
+  </g>
+  <text x="744" y="336" fill="#8a91a3" font-size="11" text-anchor="middle">tags: service:* · severity:* · type:postmortem|feedback</text>
+
+  <!-- arrows -->
+  <line x1="202" y1="146" x2="258" y2="146" stroke="#8a91a3" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="482" y1="130" x2="556" y2="130" stroke="#a58bff" stroke-width="1.5" marker-end="url(#p)"/>
+  <text x="519" y="122" fill="#a58bff" font-size="10.5" text-anchor="middle">recall</text>
+  <line x1="556" y1="170" x2="486" y2="170" stroke="#a58bff" stroke-width="1.5" marker-end="url(#p)"/>
+  <text x="521" y="186" fill="#a58bff" font-size="10.5" text-anchor="middle">memories</text>
+  <line x1="372" y1="196" x2="372" y2="258" stroke="#8a91a3" stroke-width="1.5" marker-end="url(#a)"/>
+  <path d="M117 182 V 380 H 744 V 366" fill="none" stroke="#3ddc97" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="430" y="398" fill="#3ddc97" font-size="11.5" text-anchor="middle">engineer resolves + grades Deja → retain postmortem &amp; feedback → refresh runbook</text>
+</svg>

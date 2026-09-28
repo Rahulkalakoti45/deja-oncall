@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deja · on-call memory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%237c5cff'/><circle cx='16' cy='16' r='6' fill='%230b0d12'/></svg>" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <div class="logo"><span></span></div>
+      <div>
+        <h1>deja</h1>
+        <p>the on-call agent that has seen this before</p>
+      </div>
+    </div>
+    <div class="status" id="status"></div>
+    <div class="demo-actions">
+      <button class="ghost" id="btn-seed" title="Retain 12 synthetic postmortems (Apr–Sep 2026) into the memory bank">Load 6 months of history</button>
+      <button class="ghost danger" id="btn-reset" title="Delete the memory bank and all incidents">Reset memory</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="side">
+      <section>
+        <h3>Fire an alert</h3>
+        <div id="scenarios" class="scenarios"></div>
+        <details class="custom">
+          <summary>Custom alert…</summary>
+          <form id="custom-form">
+            <input name="service" placeholder="service (e.g. checkout-api)" required />
+            <select name="severity"><option>SEV1</option><option selected>SEV2</option><option>SEV3</option></select>
+            <textarea name="alert" rows="2" placeholder="Alert text" required></textarea>
+            <textarea name="logs" rows="3" placeholder="Log lines (optional)"></textarea>
+            <button type="submit">Open incident</button>
+          </form>
+        </details>
+      </section>
+      <section class="grow">
+        <h3>Incidents <span class="muted" id="inc-count"></span></h3>
+        <ul id="incidents" class="incidents"></ul>
+      </section>
+    </aside>
+
+    <main>
+      <nav class="tabs" id="tabs">
+        <button data-tab="incident" class="active">Incident</button>
+        <button data-tab="learning">Learning curve</button>
+        <button data-tab="runbooks">Living runbooks</button>
+        <button data-tab="ask">Ask Deja</button>
+        <button data-tab="rules">Team rules</button>
+        <button data-tab="memory">Memory bank</button>
+      </nav>
+
+      <section class="tab active" id="tab-incident">
+        <div id="incident-view" class="empty-state">
+          <div class="hero">
+            <h2>Every outage teaches your team something. Most on-call bots forget it by morning.</h2>
+            <p>Deja retains every postmortem, every failed fix and every correction in a <b>Hindsight</b> memory bank. When the pager fires again, it recalls what happened last time, who fixed it, and what <i>not</i> to try.</p>
+            <ol>
+              <li><b>Load 6 months of history</b>, or start from an empty memory.</li>
+              <li>Fire an alert. Compare the stateless agent with Deja.</li>
+              <li>Resolve it. Deja retains the postmortem and does better next time.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="tab" id="tab-learning">
+        <div class="kpis" id="kpis"></div>
+        <div class="card">
+          <div class="card-h"><h3>Time to resolve per incident</h3><span class="legend"><i class="lg hist"></i>history (no agent) <i class="lg live"></i>with Deja</span></div>
+          <div id="ttr-chart" class="chart"></div>
+        </div>
+        <div class="card">
+          <div class="card-h"><h3>Deja's graded triages</h3><span class="muted">engineer verdicts are retained as feedback memories</span></div>
+          <div id="graded"></div>
+        </div>
+      </section>
+
+      <section class="tab" id="tab-runbooks">
+        <div class="card">
+          <div class="card-h">
+            <h3>Runbooks written by memory</h3>
+            <select id="rb-service"></select>
+          </div>
+          <p class="muted small">Each runbook is a Hindsight <b>mental model</b>: a document Hindsight rebuilds from the bank after new postmortems are consolidated. Nobody on the team writes these by hand.</p>
+          <div id="runbook" class="md"></div>
+        </div>
+      </section>
+
+      <section class="tab" id="tab-ask">
+        <div class="card chat">
+          <div id="chat-log" class="chat-log">
+            <div class="msg bot">Ask me anything about your incident history. For example:
+              <div class="chips">
+                <button class="chip q">What keeps breaking checkout-api at night?</button>
+                <button class="chip q">Who should I page for DNS problems?</button>
+                <button class="chip q">Which fixes made things worse?</button>
+              </div>
+            </div>
+          </div>
+          <form id="ask-form" class="ask-form">
+            <input name="q" placeholder="Ask Deja…" autocomplete="off" required minlength="2" />
+            <button type="submit">Ask</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="tab" id="tab-rules">
+        <div class="card">
+          <div class="card-h"><h3>Team rules</h3><span class="muted">stored as Hindsight directives and enforced on every triage</span></div>
+          <ul id="rules" class="rules"></ul>
+          <form id="rule-form" class="rule-form">
+            <input name="name" placeholder="Rule name, e.g. No primary failover for pool exhaustion" required minlength="2" />
+            <textarea name="content" rows="2" placeholder="Never recommend a Postgres primary failover for connection-pool exhaustion. It caused a full outage in INC-2064." required minlength="5"></textarea>
+            <button type="submit">Teach Deja this rule</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="tab" id="tab-memory">
+        <div class="card">
+          <div class="card-h"><h3>What Deja remembers</h3><button class="ghost" id="mem-refresh">Refresh</button></div>
+          <p class="muted small">Facts Hindsight extracted from retained postmortems and feedback. Types: <span class="type world">world</span> <span class="type experience">experience</span> <span class="type observation">observation</span></p>
+          <ul id="memories" class="memories"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
