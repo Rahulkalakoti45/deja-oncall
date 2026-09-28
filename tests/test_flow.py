@@ -43,6 +43,7 @@ def test_recurring_incident_is_recognised_and_past_failures_are_flagged(client):
 
 
 def test_agent_learns_a_brand_new_failure_mode(client):
+    client.post("/api/demo/seed")  # unrelated history must not produce a false match
     first = _open(client, scenario="ledger-wal")
     t1 = client.post(f"/api/incidents/{first}/triage").json()["triage"]["deja"]
     assert t1["seen_before"] is False and t1["confidence"] <= 35

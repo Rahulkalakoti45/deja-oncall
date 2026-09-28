@@ -309,8 +309,9 @@ class LocalMemory:
             if s > 0:
                 scored.append((s, d))
         scored.sort(key=lambda x: (x[0], x[1].get("occurred_at") or ""), reverse=True)
-        top = scored[0][0] if scored else 1
-        return [Memory(id=d["id"], text=d["text"], type=d["type"], score=round(s / top, 3), tags=d["tags"],
+        # Absolute (not max-normalised) relevance, so a weak best match stays weak:
+        # a strong repeat scores ~20+, an unrelated incident sharing a few generic words ~4-8.
+        return [Memory(id=d["id"], text=d["text"], type=d["type"], score=round(min(1.0, s / 20), 3), tags=d["tags"],
                        metadata=d["metadata"], occurred_at=d["occurred_at"], document_id=d["document_id"])
                 for s, d in scored[:limit]]
 

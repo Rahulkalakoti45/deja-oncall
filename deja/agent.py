@@ -374,7 +374,8 @@ class Deja:
         seen: dict[str, Memory] = {}
         for m in memories:
             iid = _incident_id_of(m)
-            if iid and m.metadata.get("root_cause") and iid not in seen and m.score >= 0.35:
+            same_service = m.metadata.get("service") == inc["service"]
+            if iid and m.metadata.get("root_cause") and iid not in seen and (m.score >= 0.6 or (same_service and m.score >= 0.35)):
                 seen[iid] = m
         matches = sorted(seen.values(), key=lambda m: (m.metadata.get("service") == inc["service"], m.score), reverse=True)
         do_not = [{"action": r["name"], "why": r["content"], "evidence": "team rule"} for r in rules]
