@@ -188,3 +188,4 @@ pre.logs { background: var(--bg); border: 1px solid var(--line); border-radius: 
   .resolve form { grid-template-columns: 1fr; } .graded-row { grid-template-columns: 1fr 1fr; }
   .incidents { max-height: 260px; }
 }
+.recall, .versus, #resolve, .learned, .answer, .dont { scroll-margin-top: 84px; }
