@@ -122,4 +122,4 @@ After every resolved incident the runbook is rebuilt from memory. Nobody schedul
 4. **Close the loop with feedback.** Grading the agent takes one click and turns every incident into training data, with no fine-tuning involved.
 5. **Separate facts from rules.** Facts go through recall. Non-negotiables are directives.
 
-The code is on GitHub: **[REPLACE WITH YOUR REPO URL]**. If you run on-call for anything, try pointing your last ten postmortems at it and see what it remembers. Read more about [what agent memory is](https://vectorize.io/what-is-agent-memory) and the [Hindsight docs](https://hindsight.vectorize.io/).
+The code is on GitHub: **https://github.com/Rahulkalakoti45/deja-oncall**. If you run on-call for anything, try pointing your last ten postmortems at it and see what it remembers. Read more about [what agent memory is](https://vectorize.io/what-is-agent-memory) and the [Hindsight docs](https://hindsight.vectorize.io/).

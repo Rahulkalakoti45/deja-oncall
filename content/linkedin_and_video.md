@@ -15,7 +15,7 @@ What made the difference:
 - Hard rules as directives, not memories
 - Runbooks rebuilt from memory after each incident
 
-Repo: [YOUR REPO URL]
+Repo: https://github.com/Rahulkalakoti45/deja-oncall
 
 #AIAgents #AgentMemory #Hindsight #SRE #LLM
 
